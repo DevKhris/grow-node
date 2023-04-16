@@ -4,7 +4,17 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 class User extends Model {}
 User.init(
   {
-    email: DataTypes.STRING,
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     password: DataTypes.STRING,
   },
   {
@@ -14,3 +24,4 @@ User.init(
 );
 
 module.exports = User;
+

@@ -25,10 +25,11 @@ class AuthService extends BaseService {
         email: data.email,
         password: await bcrypt.hash(data.password, parseInt(salt)),
       };
-
-      let registeredUser = this.userRepository.create(user);
-
-      return registeredUser;
+      const registeredUser = this.userRepository.create(user);
+      return {
+        id: registeredUser.id,
+        email: registeredUser.email,
+      };
     } catch (error) {
       throw error;
     }
@@ -37,12 +38,26 @@ class AuthService extends BaseService {
   async loginUser(email, password) {
     try {
       const user = await this.userRepository.getByEmail(email);
-
-      if (await bcrypt.compare(password, user.password)) {
-        token = jwt.sign(user, process.env.APP_KEY);
-        return token;
+      if (user) {
+        const validatedUser = await bcrypt.compare(password, user.password);
+        if (validatedUser) {
+          const token = jwt.sign(
+            { id: user.id, email: user.email },
+            process.env.APP_KEY
+          );
+          return token;
+        }
       }
       return false;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  getUserInfo(id) {
+    try {
+      const user = this.userRepository.getBySecureId(id);
+      return user;
     } catch (error) {
       throw error;
     }

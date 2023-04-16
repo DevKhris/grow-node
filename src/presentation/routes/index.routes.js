@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
 
 module.exports = ({ AuthRoutes }) => {
   const router = require("express").Router();
@@ -12,6 +13,7 @@ module.exports = ({ AuthRoutes }) => {
     )
     .use(express.json())
     .use(cors())
+    .use(helmet())
     .use(
       express.urlencoded({
         extended: false,

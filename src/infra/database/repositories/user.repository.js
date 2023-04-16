@@ -7,7 +7,24 @@ class UserRepository extends BaseRepository {
 
   async getByEmail(email) {
     try {
-      return await this.model.findOne({ where: { email: email } });
+      return await this.model.findOne({
+        where: { email: email },
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getBySecureId(id) {
+    try {
+      return await this.model.findOne({
+        where: {
+          id: id,
+        },
+        attributes: {
+          exclude: ["password"],
+        },
+      });
     } catch (error) {
       throw error;
     }

@@ -1,7 +1,6 @@
 const { createContainer, asClass, asValue, asFunction } = require("awilix");
 
 // Application
-const databaseConfig = require("./../../infra/database/config/config");
 const app = require("../server");
 
 // Routes

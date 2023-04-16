@@ -1,7 +1,8 @@
+// Enviroment
 require("dotenv").config();
-const container = require("./src/application/dependency/container");
 
 // Dependency Injection
+const container = require("./src/application/dependency/container");
 const server = container.resolve("app");
 
 // Database
