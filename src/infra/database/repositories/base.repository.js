@@ -11,9 +11,24 @@ class BaseRepository {
     }
   }
 
-  async getAll() {
+  async get(options) {
     try {
-      return await this.model.findAll();
+      return await this.model.findOne(options);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getAll(options = null) {
+    try {
+      return await this.model.findAll(options);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllCount(options = null) {
+    try {
+      return await this.model.findAndCountAll(options);
     } catch (error) {
       throw error;
     }
@@ -27,24 +42,17 @@ class BaseRepository {
     }
   }
 
-  async update(id, data) {
+  async update(options, data) {
     try {
-      return await this.model.update(data, {
-        where: {
-          id: id,
-        },
-      });
+      return await this.model.update(data, options);
     } catch (error) {
       throw error;
     }
   }
-  async delete(id) {
+
+  async delete(options) {
     try {
-      return await this.model.destroy({
-        where: {
-          id: id,
-        },
-      });
+      return await this.model.destroy(options);
     } catch (error) {
       throw error;
     }
