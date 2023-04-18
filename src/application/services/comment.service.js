@@ -1,16 +1,32 @@
 const BaseService = require("./base.service");
 
-class PostService extends BaseService {
-  constructor({ PostRepository }) {
-    super(PostRepository);
+class CommentService extends BaseService {
+  constructor({ CommentRepository }) {
+    super(CommentRepository);
   }
 
-  async getAllPosts() {
+  async getAllComments() {
     try {
       return await this.repository.getAllCount({});
     } catch (error) {
       throw error;
     }
+  }
+
+  async getById(commentId) {
+    try {
+      return await this.repository.getById(commentId);
+    } catch (error) {}
+  }
+
+  async getAllByPostId(postId) {
+    try {
+      return await this.repository.getAllCount({
+        where: {
+          post_id: postId,
+        },
+      });
+    } catch (error) {}
   }
 
   async getAllByUserId(userId) {
@@ -25,38 +41,40 @@ class PostService extends BaseService {
     }
   }
 
-  async getUserPost(userId, postId) {
+  async getAllByUserAndPost(userId, postId) {
     try {
-      return await this.repository.get({
+      return await this.repository.getAllCount({
         where: {
           user_id: userId,
-          id: postId,
+          post_id: postId,
         },
       });
     } catch (error) {
       throw error;
     }
   }
-  async createPost(userId, data) {
+
+  async createComment(userId, postId, data) {
     try {
-      const postData = {
+      const commentData = {
         user_id: userId,
+        post_id: postId,
         ...data,
       };
 
-      return await this.create(postData);
+      return await this.create(commentData);
     } catch (error) {
       throw error;
     }
   }
 
-  async updatePost(userId, postId, data) {
+  async updateComment(userId, commentId, data) {
     try {
       return await this.repository.update(
         {
           where: {
             user_id: userId,
-            id: postId,
+            id: commentId,
           },
         },
         ...data
@@ -66,12 +84,12 @@ class PostService extends BaseService {
     }
   }
 
-  async deletePost(userId, postId) {
+  async deleteComment(userId, commentId) {
     try {
       return await this.repository.delete({
         where: {
           user_id: userId,
-          id: postId,
+          id: commentId,
         },
       });
     } catch (error) {
@@ -80,4 +98,4 @@ class PostService extends BaseService {
   }
 }
 
-module.exports = PostService;
+module.exports = CommentService;

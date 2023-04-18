@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Posts", {
+    await queryInterface.createTable("Comments", {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -10,12 +10,11 @@ module.exports = {
         allowNull: false,
       },
       user_id: {
-        type: Sequelize.STRING,
         type: Sequelize.UUID,
         allowNull: false,
       },
-      title: {
-        type: Sequelize.STRING,
+      post_id: {
+        type: Sequelize.UUID,
         allowNull: false,
       },
       content: {
@@ -33,7 +32,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("Comments");
   },
 };
 

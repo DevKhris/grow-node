@@ -1,8 +1,8 @@
 const sequelize = require("./index").sequelize;
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
-class Post extends Model {}
-Post.init(
+class Comment extends Model {}
+Comment.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -12,11 +12,10 @@ Post.init(
     },
     user_id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
     },
-    title: {
-      type: DataTypes.STRING,
+    post_id: {
+      type: DataTypes.UUID,
       allowNull: false,
     },
     content: {
@@ -26,9 +25,9 @@ Post.init(
   },
   {
     sequelize,
-    modelName: "Post",
+    modelName: "Comment",
   }
 );
 
-module.exports = Post;
+module.exports = Comment;
 

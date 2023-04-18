@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
-module.exports = ({ AuthRoutes, PostRoutes }) => {
+module.exports = ({ AuthRoutes, PostRoutes, CommentRoutes }) => {
   const router = require("express").Router();
   // Middlewares
   router
@@ -31,5 +31,7 @@ module.exports = ({ AuthRoutes, PostRoutes }) => {
   router.use("/api/v1/auth", AuthRoutes);
 
   router.use("/api/v1", PostRoutes);
+
+  router.use("/api/v1", CommentRoutes);
   return router;
 };
