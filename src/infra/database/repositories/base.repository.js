@@ -1,12 +1,17 @@
 class BaseRepository {
   constructor(model, logger = null) {
     this.model = model;
+
+    if (logger) {
+      this.logger = logger;
+    }
   }
 
   async create(data) {
     try {
       return await this.model.create(data);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -15,6 +20,7 @@ class BaseRepository {
     try {
       return await this.model.findOne(options);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -22,6 +28,7 @@ class BaseRepository {
     try {
       return await this.model.findAll(options);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -30,6 +37,7 @@ class BaseRepository {
     try {
       return await this.model.findAndCountAll(options);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -38,6 +46,7 @@ class BaseRepository {
     try {
       return await this.model.findByPk(id);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -46,6 +55,7 @@ class BaseRepository {
     try {
       return await this.model.update(data, options);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -54,6 +64,7 @@ class BaseRepository {
     try {
       return await this.model.destroy(options);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }

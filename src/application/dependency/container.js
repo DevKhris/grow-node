@@ -2,6 +2,7 @@ const { createContainer, asClass, asValue, asFunction } = require("awilix");
 
 // Application
 const app = require("../server");
+const logger = require("../../infra/logging/logger");
 
 // Routes
 const AuthRoutes = require("../../presentation/routes/auth.routes");
@@ -32,6 +33,7 @@ container
   .register({
     app: asClass(app).singleton(),
     router: asFunction(Routes).singleton(),
+    logger: asValue(logger),
   })
   // Auth
   .register({

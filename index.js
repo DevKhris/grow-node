@@ -10,10 +10,12 @@ const { sequelize } = require("./src/infra/database/entities/index");
 
 sequelize
   .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-    server.startServers();
+  .then(async () => {
+    server.logger.info(
+      "Connection to database has been established successfully."
+    );
+    await server.startServers();
   })
   .catch((error) => {
-    console.error("Unable to connect to the database: ", error);
+    server.logger.error("Unable to connect to the database:", error);
   });

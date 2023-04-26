@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const LoggingMiddleware = require("../middlewares/logging.middleware");
 
 module.exports = ({ AuthRoutes, PostRoutes, CommentRoutes }) => {
   const router = require("express").Router();
@@ -19,6 +20,8 @@ module.exports = ({ AuthRoutes, PostRoutes, CommentRoutes }) => {
         extended: false,
       })
     );
+
+  router.use(LoggingMiddleware);
 
   // Routes
   router.get("/", (req, res) => {

@@ -1,12 +1,24 @@
 const AuthMiddleware = require("./../middlewares/auth.middleware");
 
-module.exports = ({ AuthService }) => {
+module.exports = ({ AuthService, logger }) => {
   const router = require("express").Router();
 
   router.post("/register", async (req, res) => {
     try {
-      const user = await AuthService.registerUser(req.body);
-      res.status(201).json(user);
+      return await AuthService.registerUser(req.body)
+        .then((result) => {
+          if (!result)
+            return res.status(500).json({
+              message: "Can't register this customer or already exist",
+            });
+          return res.status(201).json(result);
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            message: "Can't register this customer or already exist",
+            code: err.parent.code,
+          });
+        });
     } catch (error) {
       throw error;
     }
@@ -14,15 +26,21 @@ module.exports = ({ AuthService }) => {
 
   router.post("/login", async (req, res) => {
     try {
-      const token = await AuthService.loginUser(
-        req.body.email,
-        req.body.password
-      );
-
-      if (token === false) {
-        res.status(400).json({ error: "Invalid user or password" });
-      }
-      res.status(200).json({ token });
+      return await AuthService.loginUser(req.body.email, req.body.password)
+        .then((result) => {
+          if (!result) {
+            return res
+              .status(401)
+              .json({ message: "Invalid credentials or password" });
+          }
+          return res.status(200).json({ token: result });
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            message: err.message,
+            code: err.parent.code,
+          });
+        });
     } catch (error) {
       throw error;
     }
@@ -30,13 +48,22 @@ module.exports = ({ AuthService }) => {
 
   router.get("/user", AuthMiddleware, async (req, res) => {
     try {
-      const user = await AuthService.getUserInfo(req.user.id);
-      if (user === null) {
-        res
-          .status(404)
-          .json({ message: "User not available, or insufficient permissions" });
-      }
-      res.status(200).json(user);
+      return await AuthService.getUserInfo(req.user.id)
+        .then((result) => {
+          if (!result) {
+            return res.status(401).json({
+              message: "User not available, or insufficient permissions",
+            });
+          }
+          res.status(200).json(result);
+        })
+        .catch((err) => {
+          console.error(err);
+          return res.status(500).json({
+            message: err.message,
+            code: err.code,
+          });
+        });
     } catch (error) {
       throw error;
     }

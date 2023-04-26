@@ -39,4 +39,3 @@ database.sequelize = sequelize;
 database.Sequelize = Sequelize;
 
 module.exports = database;
-
