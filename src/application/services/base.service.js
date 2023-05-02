@@ -1,7 +1,9 @@
 class BaseService {
   constructor({ logger }, repository) {
+    if (logger) {
+      this.logger = logger;
+    }
     this.repository = repository;
-    this.logger = logger;
   }
 
   async getAll() {
@@ -30,9 +32,9 @@ class BaseService {
     }
   }
 
-  async update(id, data) {
+  async update(options, data) {
     try {
-      return await this.repository.update(id, data);
+      return await this.repository.update(options, data);
     } catch (error) {
       this.logger.error(error);
       throw error;

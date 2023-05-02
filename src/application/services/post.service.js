@@ -1,14 +1,26 @@
 const BaseService = require("./base.service");
 
 class PostService extends BaseService {
-  constructor({ PostRepository }) {
-    super(PostRepository);
+  constructor({ logger, PostRepository }) {
+    super(logger, PostRepository);
   }
 
   async getAllPosts() {
     try {
-      return await this.repository.getAllCount({});
+      return await this.repository
+        .getAllCount({})
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          this.logger.error(error);
+          throw error;
+        });
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -21,6 +33,7 @@ class PostService extends BaseService {
         },
       });
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -34,6 +47,7 @@ class PostService extends BaseService {
         },
       });
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
@@ -46,35 +60,60 @@ class PostService extends BaseService {
 
       return await this.create(postData);
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
 
   async updatePost(userId, postId, data) {
     try {
-      return await this.repository.update(
-        {
-          where: {
-            user_id: userId,
-            id: postId,
+      return await this.repository
+        .update(
+          {
+            where: {
+              user_id: userId,
+              id: postId,
+            },
           },
-        },
-        ...data
-      );
+          data
+        )
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          this.logger.error(error);
+          throw error;
+        });
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
 
   async deletePost(userId, postId) {
     try {
-      return await this.repository.delete({
-        where: {
-          user_id: userId,
-          id: postId,
-        },
-      });
+      return await this.repository
+        .delete({
+          where: {
+            user_id: userId,
+            id: postId,
+          },
+        })
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          this.logger.error(error);
+          throw error;
+        });
     } catch (error) {
+      this.logger.error(error);
       throw error;
     }
   }
