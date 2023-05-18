@@ -1,6 +1,4 @@
-const AuthMiddleware = require("./../middlewares/auth.middleware");
-
-module.exports = ({ AuthService, logger }) => {
+module.exports = ({ AuthService, AuthMiddleware }) => {
   const router = require("express").Router();
 
   router.post("/register", async (req, res) => {

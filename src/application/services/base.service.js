@@ -1,8 +1,5 @@
 class BaseService {
-  constructor({ logger }, repository) {
-    if (logger) {
-      this.logger = logger;
-    }
+  constructor(repository) {
     this.repository = repository;
   }
 
@@ -10,7 +7,6 @@ class BaseService {
     try {
       return await this.repository.getAll();
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -19,7 +15,6 @@ class BaseService {
     try {
       return await this.repository.getById(id);
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -27,7 +22,6 @@ class BaseService {
     try {
       return await this.repository.create(data);
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -36,7 +30,6 @@ class BaseService {
     try {
       return await this.repository.update(options, data);
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }

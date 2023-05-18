@@ -1,8 +1,8 @@
 const BaseRepository = require("./base.repository");
 
 class UserRepository extends BaseRepository {
-  constructor({ User, logger }) {
-    super(User, logger);
+  constructor({ User }) {
+    super(User);
   }
 
   async getByEmail(email) {
@@ -11,7 +11,6 @@ class UserRepository extends BaseRepository {
         where: { email: email },
       });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -27,7 +26,6 @@ class UserRepository extends BaseRepository {
         },
       });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }

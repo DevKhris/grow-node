@@ -5,8 +5,20 @@ module.exports = ({ CommentService }) => {
 
   router.get("/comments", async (req, res) => {
     try {
-      const comments = await CommentService.getAllComments();
-      res.status(200).json(comments);
+      return await CommentService.getAllComments()
+        .then((result) => {
+          if (!result) {
+            return res.status(404).json({
+              message: "Comment's not found",
+            });
+          }
+          res.status(200).json(result);
+        })
+        .catch((error) => {
+          res.status(500).json({
+            message: error.message,
+          });
+        });
     } catch (error) {
       throw error;
     }
@@ -14,8 +26,20 @@ module.exports = ({ CommentService }) => {
 
   router.get("/comments/:commentId", async (req, res) => {
     try {
-      const comments = await CommentService.getById(req.params.commentId);
-      res.status(200).json(comments);
+      return await CommentService.getById(req.params.commentId)
+        .then((result) => {
+          if (!result) {
+            return res.status(404).json({
+              message: "Comment not found",
+            });
+          }
+          res.status(200).json(result);
+        })
+        .catch((error) => {
+          res.status(500).json({
+            message: error.message,
+          });
+        });
     } catch (error) {
       throw error;
     }

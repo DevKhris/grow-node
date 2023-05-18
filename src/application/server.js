@@ -26,7 +26,7 @@ class Server {
     this.httpServer = http.createServer(this.app);
     this.httpsServer = https.createServer(this.credentials, this.app);
     this.logger = logger;
-    this.app.use(morgan("combined", { stream: this.logger.stream }));
+    this.app.use(morgan("combined", { stream: this.logger.stream.write }));
     this.app.use(router);
   }
 

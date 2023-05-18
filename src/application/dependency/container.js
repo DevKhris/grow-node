@@ -10,6 +10,9 @@ const PostRoutes = require("../../presentation/routes/post.routes");
 const CommentRoutes = require("../../presentation/routes/comment.routes");
 const Routes = require("../../presentation/routes/index");
 
+// Middleware
+const AuthMiddleware = require("../../presentation/middlewares/auth.middleware");
+const LoggingMiddleware = require("../../presentation/middlewares/logging.middleware");
 // Services
 const AuthService = require("./../../application/services/auth.service");
 const PostService = require("./../../application/services/post.service");
@@ -34,10 +37,12 @@ container
     app: asClass(app).singleton(),
     router: asFunction(Routes).singleton(),
     logger: asValue(logger),
+    LoggingMiddleware: asValue(LoggingMiddleware),
   })
   // Auth
   .register({
     AuthRoutes: asFunction(AuthRoutes),
+    AuthMiddleware: asValue(AuthMiddleware),
     AuthService: asClass(AuthService).singleton(),
     UserRepository: asClass(UserRepository).singleton(),
     User: asValue(User),

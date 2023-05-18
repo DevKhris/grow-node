@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const BaseService = require("./base.service");
 
 class AuthService extends BaseService {
-  constructor({ UserRepository, logger }) {
-    super(UserRepository, logger);
+  constructor({ UserRepository }) {
+    super(UserRepository);
     this.userRepository = UserRepository;
   }
 
@@ -14,7 +14,6 @@ class AuthService extends BaseService {
       const salt = await bcrypt.genSalt(20);
       return salt;
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -37,11 +36,9 @@ class AuthService extends BaseService {
           };
         })
         .catch((err) => {
-          this.logger.error(err);
           throw err;
         });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -58,7 +55,6 @@ class AuthService extends BaseService {
           throw err;
         });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -74,7 +70,6 @@ class AuthService extends BaseService {
           return jwt.sign({ id: user.id, email: user.email }, process.env.KEY);
         })
         .catch((err) => {
-          this.logger.error(err);
           throw err;
         });
     } catch (error) {
@@ -92,7 +87,6 @@ class AuthService extends BaseService {
           return result;
         })
         .catch((err) => {
-          this.logger.error(err);
           throw err;
         });
     } catch (error) {

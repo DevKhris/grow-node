@@ -1,8 +1,8 @@
 const BaseService = require("./base.service");
 
 class PostService extends BaseService {
-  constructor({ logger, PostRepository }) {
-    super(logger, PostRepository);
+  constructor({ PostRepository }) {
+    super(PostRepository);
   }
 
   async getAllPosts() {
@@ -16,11 +16,9 @@ class PostService extends BaseService {
           return result;
         })
         .catch((error) => {
-          this.logger.error(error);
           throw error;
         });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -33,7 +31,6 @@ class PostService extends BaseService {
         },
       });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -47,7 +44,6 @@ class PostService extends BaseService {
         },
       });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -60,7 +56,6 @@ class PostService extends BaseService {
 
       return await this.create(postData);
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -84,11 +79,9 @@ class PostService extends BaseService {
           return result;
         })
         .catch((error) => {
-          this.logger.error(error);
           throw error;
         });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }
@@ -109,11 +102,9 @@ class PostService extends BaseService {
           return result;
         })
         .catch((error) => {
-          this.logger.error(error);
           throw error;
         });
     } catch (error) {
-      this.logger.error(error);
       throw error;
     }
   }

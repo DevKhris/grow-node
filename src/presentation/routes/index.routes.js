@@ -1,10 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const LoggingMiddleware = require("../middlewares/logging.middleware");
 
-module.exports = ({ AuthRoutes, PostRoutes, CommentRoutes }) => {
-  const router = require("express").Router();
+module.exports = ({
+  AuthRoutes,
+  PostRoutes,
+  CommentRoutes,
+  LoggingMiddleware,
+}) => {
+  const router = express.Router();
+
   // Middlewares
   router
     .use(
@@ -14,12 +19,7 @@ module.exports = ({ AuthRoutes, PostRoutes, CommentRoutes }) => {
     )
     .use(express.json())
     .use(cors())
-    .use(helmet())
-    .use(
-      express.urlencoded({
-        extended: false,
-      })
-    );
+    .use(helmet());
 
   router.use(LoggingMiddleware);
 

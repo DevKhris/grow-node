@@ -7,7 +7,17 @@ class CommentService extends BaseService {
 
   async getAllComments() {
     try {
-      return await this.repository.getAllCount({});
+      return await this.repository
+        .getAllCount({})
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {
       throw error;
     }
@@ -15,27 +25,59 @@ class CommentService extends BaseService {
 
   async getById(commentId) {
     try {
-      return await this.repository.getById(commentId);
+      return await this.repository
+        .getById(commentId)
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {}
   }
 
   async getAllByPostId(postId) {
     try {
-      return await this.repository.getAllCount({
-        where: {
-          post_id: postId,
-        },
-      });
-    } catch (error) {}
+      return await this.repository
+        .getAllCount({
+          where: {
+            post_id: postId,
+          },
+        })
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getAllByUserId(userId) {
     try {
-      return await this.repository.getAllCount({
-        where: {
-          user_id: userId,
-        },
-      });
+      return await this.repository
+        .getAllCount({
+          where: {
+            user_id: userId,
+          },
+        })
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {
       throw error;
     }
@@ -43,12 +85,22 @@ class CommentService extends BaseService {
 
   async getAllByUserAndPost(userId, postId) {
     try {
-      return await this.repository.getAllCount({
-        where: {
-          user_id: userId,
-          post_id: postId,
-        },
-      });
+      return await this.repository
+        .getAllCount({
+          where: {
+            user_id: userId,
+            post_id: postId,
+          },
+        })
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {
       throw error;
     }
@@ -62,7 +114,16 @@ class CommentService extends BaseService {
         ...data,
       };
 
-      return await this.create(commentData);
+      return await this.create(commentData)
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {
       throw error;
     }
@@ -70,15 +131,25 @@ class CommentService extends BaseService {
 
   async updateComment(userId, commentId, data) {
     try {
-      return await this.repository.update(
-        {
-          where: {
-            user_id: userId,
-            id: commentId,
+      return await this.repository
+        .update(
+          {
+            where: {
+              user_id: userId,
+              id: commentId,
+            },
           },
-        },
-        ...data
-      );
+          ...data
+        )
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {
       throw error;
     }
@@ -86,12 +157,22 @@ class CommentService extends BaseService {
 
   async deleteComment(userId, commentId) {
     try {
-      return await this.repository.delete({
-        where: {
-          user_id: userId,
-          id: commentId,
-        },
-      });
+      return await this.repository
+        .delete({
+          where: {
+            user_id: userId,
+            id: commentId,
+          },
+        })
+        .then((result) => {
+          if (!result) {
+            return false;
+          }
+          return result;
+        })
+        .catch((error) => {
+          throw error;
+        });
     } catch (error) {
       throw error;
     }
